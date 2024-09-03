@@ -1,14 +1,14 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local ReplicatedFirst   = game:GetService("ReplicatedFirst")
-local UserInputService  = game:GetService("UserInputService")
-local RunService        = game:GetService("RunService")
-local Lighting          = game:GetService("Lighting")
-local Players           = game:GetService("Players")
+local ReplicatedFirst = game:GetService("ReplicatedFirst")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local Lighting = game:GetService("Lighting")
+local Players = game:GetService("Players")
 
 local LocalPlayer = Players.LocalPlayer
-local PlayerGui   = LocalPlayer.PlayerGui
-local Mouse       = LocalPlayer:GetMouse()
-local Camera      = workspace.CurrentCamera
+local PlayerGui = LocalPlayer.PlayerGui
+local Mouse = LocalPlayer:GetMouse()
+local Camera = workspace.CurrentCamera
 RunService.RenderStepped:Connect(function()
     Camera = workspace.CurrentCamera
 end)
@@ -16,7 +16,7 @@ end)
 local function Create(Object, Properties, Parent)
     local Obj = Instance.new(Object)
 
-    for i,v in pairs (Properties) do
+    for i, v in pairs(Properties) do
         Obj[i] = v
     end
     if Parent ~= nil then
@@ -38,7 +38,8 @@ end
 
 local menu
 do
-    local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Lncvrt/cripware-lib/main/cripware-lib.lua"))()
+    local library = loadstring(game:HttpGet(
+        "https://raw.githubusercontent.com/Lncvrt/cripware-lib/main/cripware-lib.lua"))()
 
     menu = library.new([[universal <font color="rgb(78, 93, 234)">v1</font>]], "nemv2\\")
     local tabs = {
@@ -56,8 +57,8 @@ do
 
         local configs = _menu.new_sector("configs")
         local text
-        local list = configs.element("Scroll", "config list", {options = {"none"}}, function(State)
-            text:set_value({Text = State.Scroll})
+        local list = configs.element("Scroll", "config list", { options = { "none" } }, function(State)
+            text:set_value({ Text = State.Scroll })
         end)
         text = configs.element("TextBox", "config name")
         configs.element("Button", "save", nil, function()
@@ -73,11 +74,12 @@ do
 
         local function update_cfgs()
             all_cfgs = listfiles("nemv2\\")
-            for _,cfg in next, all_cfgs do
+            for _, cfg in next, all_cfgs do
                 all_cfgs[_] = string.gsub(string.gsub(cfg, "nemv2\\", ""), ".txt", "")
                 list:add_value(all_cfgs[_])
             end
-        end update_cfgs()
+        end
+        update_cfgs()
 
         task.spawn(function()
             while true do
@@ -87,10 +89,12 @@ do
         end)
 
         local methods = _menu.new_sector("methods", "Right")
-        methods.element("Combo", "mouse types", {options = {"target", "hit"}})
-        methods.element("Dropdown", "ray method", {options = {"none", "findpartonray", "findpartonraywithignorelist", "raycast"}})
-        methods.element("Slider", "minimum ray ignore", {default = {min = 0, max = 100, default = 3}})
-        methods.element("Combo", "must include", {options = {"camera", "character"}, default = {Combo = {"camera", "character"}}})
+        methods.element("Combo", "mouse types", { options = { "target", "hit" } })
+        methods.element("Dropdown", "ray method",
+            { options = { "none", "findpartonray", "findpartonraywithignorelist", "raycast" } })
+        methods.element("Slider", "minimum ray ignore", { default = { min = 0, max = 100, default = 3 } })
+        methods.element("Combo", "must include",
+            { options = { "camera", "character" }, default = { Combo = { "camera", "character" } } })
 
         local playercheck = _menu.new_sector("player check")
         playercheck.element("Toggle", "free for all")
@@ -101,24 +105,24 @@ do
 
         local main = aimbot.new_sector("main")
         main.element("Toggle", "enabled"):add_keybind()
-        main.element("Dropdown", "origin", {options = {"camera", "head"}})
-        main.element("Dropdown", "hitbox", {options = {"head", "torso"}})
+        main.element("Dropdown", "origin", { options = { "camera", "head" } })
+        main.element("Dropdown", "hitbox", { options = { "head", "torso" } })
         main.element("Toggle", "automatic fire")
 
         local antiaim = tabs[1].new_section("antiaim")
 
         local direction = antiaim.new_sector("direction")
         direction.element("Toggle", "enabled"):add_keybind()
-        direction.element("Dropdown", "yaw base", {options = {"camera", "random", "spin"}})
-        direction.element("Slider", "yaw offset", {default = {min = -180, max = 180, default = 0}})
-        direction.element("Dropdown", "yaw modifier", {options = {"none", "jitter", "offset jitter"}})
-        direction.element("Slider", "modifier offset", {default = {min = -180, max = 180, default = 0}})
+        direction.element("Dropdown", "yaw base", { options = { "camera", "random", "spin" } })
+        direction.element("Slider", "yaw offset", { default = { min = -180, max = 180, default = 0 } })
+        direction.element("Dropdown", "yaw modifier", { options = { "none", "jitter", "offset jitter" } })
+        direction.element("Slider", "modifier offset", { default = { min = -180, max = 180, default = 0 } })
         direction.element("Toggle", "force angles")
 
         local fakelag = antiaim.new_sector("fakelag", "Right")
         fakelag.element("Toggle", "enabled"):add_keybind()
-        fakelag.element("Dropdown", "method", {options = {"static", "random"}})
-        fakelag.element("Slider", "limit", {default = {min = 1, max = 16, default = 6}})
+        fakelag.element("Dropdown", "method", { options = { "static", "random" } })
+        fakelag.element("Slider", "limit", { default = { min = 1, max = 16, default = 6 } })
         fakelag.element("Toggle", "visualize"):add_color(nil, true)
         fakelag.element("Toggle", "freeze world", nil, function(state)
             if menu.values[1].antiaim.fakelag["freeze world"].Toggle and menu.values[1].antiaim.fakelag["$freeze world"].Active then
@@ -137,7 +141,7 @@ do
         local Line = Drawing.new("Line")
         Line.Visible = false
         Line.Transparency = 1
-        Line.Color = Color3.new(1,1,1)
+        Line.Color = Color3.new(1, 1, 1)
         Line.Thickness = 1
         Line.ZIndex = 1
 
@@ -145,16 +149,24 @@ do
         fakelag.element("Toggle", "no send", nil, function(State)
             if menu.values[1].antiaim.fakelag["no send"].Toggle and menu.values[1].antiaim.fakelag["$no send"].Active then
                 local SelfCharacter = LocalPlayer.Character
-                local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
-                if not SelfCharacter or not SelfRootPart or not SelfHumanoid then Line.Visible = false return end
+                local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"),
+                    SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+                if not SelfCharacter or not SelfRootPart or not SelfHumanoid then
+                    Line.Visible = false
+                    return
+                end
 
                 EnabledPosition = SelfRootPart.Position
             end
         end):add_keybind(nil, function(State)
             if menu.values[1].antiaim.fakelag["no send"].Toggle and menu.values[1].antiaim.fakelag["$no send"].Active then
                 local SelfCharacter = LocalPlayer.Character
-                local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
-                if not SelfCharacter or not SelfRootPart or not SelfHumanoid then Line.Visible = false return end
+                local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"),
+                    SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+                if not SelfCharacter or not SelfRootPart or not SelfHumanoid then
+                    Line.Visible = false
+                    return
+                end
 
                 EnabledPosition = SelfRootPart.Position
             end
@@ -162,11 +174,16 @@ do
 
         local WasEnabled = false
         local FakelagLoop = RunService.Heartbeat:Connect(function()
-            local Enabled = menu.values[1].antiaim.fakelag["no send"].Toggle and menu.values[1].antiaim.fakelag["$no send"].Active or false
+            local Enabled = menu.values[1].antiaim.fakelag["no send"].Toggle and
+                menu.values[1].antiaim.fakelag["$no send"].Active or false
 
             local SelfCharacter = LocalPlayer.Character
-            local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
-            if not SelfCharacter or not SelfRootPart or not SelfHumanoid then Line.Visible = false return end
+            local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"),
+                SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+            if not SelfCharacter or not SelfRootPart or not SelfHumanoid then
+                Line.Visible = false
+                return
+            end
 
             sethiddenproperty(SelfRootPart, "NetworkIsSleeping", Enabled)
 
@@ -185,7 +202,7 @@ do
             local LagTick = 0
 
             while true do
-                wait(1/16)
+                wait(1 / 16)
                 LagTick = math.clamp(LagTick + 1, 0, menu.values[1].antiaim.fakelag.limit.Slider)
                 if menu.values[1].antiaim.fakelag.enabled.Toggle and menu.values[1].antiaim.fakelag["$enabled"].Active and LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health > 0 then
                     if LagTick == (menu.values[1].antiaim.fakelag.method.Dropdown == "static" and menu.values[1].antiaim.fakelag.limit.Slider or math.random(1, menu.values[1].antiaim.fakelag.limit.Slider)) then
@@ -202,7 +219,7 @@ do
                         if menu.values[1].antiaim.fakelag.visualize.Toggle then
                             LocalPlayer.Character.Archivable = true
                             local Clone = LocalPlayer.Character:Clone()
-                            for _,Obj in next, Clone:GetDescendants() do
+                            for _, Obj in next, Clone:GetDescendants() do
                                 if Obj.Name == "HumanoidRootPart" or Obj:IsA("Humanoid") or Obj:IsA("LocalScript") or Obj:IsA("Script") or Obj:IsA("Decal") then
                                     Obj:Destroy()
                                 elseif Obj:IsA("BasePart") or Obj:IsA("Meshpart") or Obj:IsA("Part") then
@@ -242,7 +259,8 @@ do
         end)
     end
     do
-        local Circle = Drawing.new("Circle") do
+        local Circle = Drawing.new("Circle")
+        do
             Circle.Color = Color3.fromRGB(255, 255, 255)
             Circle.Thickness = 1
             Circle.Transparency = 1
@@ -252,7 +270,9 @@ do
             RunService.RenderStepped:Connect(function()
                 Circle.Position = UserInputService:GetMouseLocation()
                 if menu.values[2].advanced["mouse offset"].enabled.Toggle then
-                    Circle.Position = Circle.Position + Vector2.new(menu.values[2].advanced["mouse offset"]["x offset"].Slider, menu.values[2].advanced["mouse offset"]["y offset"].Slider)
+                    Circle.Position = Circle.Position +
+                        Vector2.new(menu.values[2].advanced["mouse offset"]["x offset"].Slider,
+                            menu.values[2].advanced["mouse offset"]["y offset"].Slider)
                 end
             end)
         end
@@ -261,66 +281,70 @@ do
 
         local assist = aimbot.new_sector("assist")
         assist.element("Toggle", "enabled"):add_keybind()
-        assist.element("Dropdown", "hitbox", {options = {"closest", "head", "torso"}})
-        assist.element("Slider", "smoothing", {default = {min = 1, max = 50, default = 1}})
+        assist.element("Dropdown", "hitbox", { options = { "closest", "head", "torso" } })
+        assist.element("Slider", "smoothing", { default = { min = 1, max = 50, default = 1 } })
 
         local silent = aimbot.new_sector("silent aim")
         silent.element("Toggle", "enabled"):add_keybind()
-        silent.element("Dropdown", "hitbox", {options = {"closest", "head", "torso"}})
-        silent.element("Slider", "hitchance", {default = {min = 1, max = 100, default = 100}})
+        silent.element("Dropdown", "hitbox", { options = { "closest", "head", "torso" } })
+        silent.element("Slider", "hitchance", { default = { min = 1, max = 100, default = 100 } })
 
         local targeting = aimbot.new_sector("targeting", "Right")
-        targeting.element("Dropdown", "prioritize", {options = {"crosshair", "distance", "lowest hp"}})
+        targeting.element("Dropdown", "prioritize", { options = { "crosshair", "distance", "lowest hp" } })
         targeting.element("Toggle", "visible check")
-        targeting.element("Slider", "max distance", {default = {min = 250, max = 15000, default = 15000}})
+        targeting.element("Slider", "max distance", { default = { min = 250, max = 15000, default = 15000 } })
 
         local fov = aimbot.new_sector("fov", "Right")
-        fov.element("Slider", "fov size", {default = {min = 30, max = 600, default = 100}}, function(State) Circle.Radius = State.Slider end)
-        fov.element("Toggle", "draw fov", nil, function(State) Circle.Visible = State.Toggle end):add_color({Color = Color3.fromRGB(84, 101, 255)}, nil, function(State) Circle.Color = State.Color end)
-        fov.element("Slider", "sides", {default = {min = 15, max = 100, default = 100}}, function(State) Circle.NumSides = State.Slider end)
-        fov.element("Slider", "thickness", {default = {min = 1, max = 4, default = 1}}, function(State) Circle.Thickness = State.Slider end)
+        fov.element("Slider", "fov size", { default = { min = 30, max = 600, default = 100 } },
+            function(State) Circle.Radius = State.Slider end)
+        fov.element("Toggle", "draw fov", nil, function(State) Circle.Visible = State.Toggle end):add_color(
+            { Color = Color3.fromRGB(84, 101, 255) }, nil, function(State) Circle.Color = State.Color end)
+        fov.element("Slider", "sides", { default = { min = 15, max = 100, default = 100 } },
+            function(State) Circle.NumSides = State.Slider end)
+        fov.element("Slider", "thickness", { default = { min = 1, max = 4, default = 1 } },
+            function(State) Circle.Thickness = State.Slider end)
 
         local triggerbot = aimbot.new_sector("triggerbot")
         triggerbot.element("Toggle", "enabled"):add_keybind()
-        triggerbot.element("Slider", "reaction time (ms)", {default = {min = 0, max = 500, default = 150}})
+        triggerbot.element("Slider", "reaction time (ms)", { default = { min = 0, max = 500, default = 150 } })
 
         local advanced = tabs[2].new_section("advanced")
 
         local offset = advanced.new_sector("mouse offset")
         offset.element("Toggle", "enabled")
-        offset.element("Slider", "x offset", {default = {min = -100, max = 100, default = 0}})
-        offset.element("Slider", "y offset", {default = {min = -100, max = 100, default = 0}})
+        offset.element("Slider", "x offset", { default = { min = -100, max = 100, default = 0 } })
+        offset.element("Slider", "y offset", { default = { min = -100, max = 100, default = 0 } })
     end
     do
         local players = tabs[3].new_section("players")
 
         local esp = players.new_sector("esp")
         esp.element("Toggle", "enabled"):add_keybind()
-        esp.element("Slider", "max distance", {default = {min = 250, max = 15000, default = 15000}})
+        esp.element("Slider", "max distance", { default = { min = 250, max = 15000, default = 15000 } })
 
         local enemies = players.new_sector("enemies")
-        enemies.element("Toggle", "box"):add_color({Color = Color3.fromRGB(255, 255, 255)})
-        enemies.element("Toggle", "name"):add_color({Color = Color3.fromRGB(255, 255, 255)})
-        enemies.element("Toggle", "health"):add_color({Color = Color3.fromRGB(0, 255, 0)})
-        enemies.element("Toggle", "indicators"):add_color({Color = Color3.fromRGB(255, 255, 255)})
-        enemies.element("Combo", "types", {options = {"tool", "distance"}})
+        enemies.element("Toggle", "box"):add_color({ Color = Color3.fromRGB(255, 255, 255) })
+        enemies.element("Toggle", "name"):add_color({ Color = Color3.fromRGB(255, 255, 255) })
+        enemies.element("Toggle", "health"):add_color({ Color = Color3.fromRGB(0, 255, 0) })
+        enemies.element("Toggle", "indicators"):add_color({ Color = Color3.fromRGB(255, 255, 255) })
+        enemies.element("Combo", "types", { options = { "tool", "distance" } })
 
         local friendlies = players.new_sector("friendlies")
-        friendlies.element("Toggle", "box"):add_color({Color = Color3.fromRGB(255, 255, 255)})
-        friendlies.element("Toggle", "name"):add_color({Color = Color3.fromRGB(255, 255, 255)})
-        friendlies.element("Toggle", "health"):add_color({Color = Color3.fromRGB(0, 255, 0)})
-        friendlies.element("Toggle", "indicators"):add_color({Color = Color3.fromRGB(255, 255, 255)})
-        friendlies.element("Combo", "types", {options = {"tool", "distance"}})
+        friendlies.element("Toggle", "box"):add_color({ Color = Color3.fromRGB(255, 255, 255) })
+        friendlies.element("Toggle", "name"):add_color({ Color = Color3.fromRGB(255, 255, 255) })
+        friendlies.element("Toggle", "health"):add_color({ Color = Color3.fromRGB(0, 255, 0) })
+        friendlies.element("Toggle", "indicators"):add_color({ Color = Color3.fromRGB(255, 255, 255) })
+        friendlies.element("Combo", "types", { options = { "tool", "distance" } })
 
         local oof = players.new_sector("out of fov", "Right")
-        oof.element("Toggle", "enemies"):add_color({Color = Color3.fromRGB(84, 101, 255)})
-        oof.element("Toggle", "teammates"):add_color({Color = Color3.fromRGB(84, 101, 255)})
-        oof.element("Slider", "size", {default = {min = 10, max = 15, default = 15}})
-        oof.element("Slider", "offset", {default = {min = 100, max = 700, default = 400}})
-        oof.element("Combo", "settings", {options = {"outline", "blinking"}})
+        oof.element("Toggle", "enemies"):add_color({ Color = Color3.fromRGB(84, 101, 255) })
+        oof.element("Toggle", "teammates"):add_color({ Color = Color3.fromRGB(84, 101, 255) })
+        oof.element("Slider", "size", { default = { min = 10, max = 15, default = 15 } })
+        oof.element("Slider", "offset", { default = { min = 100, max = 700, default = 400 } })
+        oof.element("Combo", "settings", { options = { "outline", "blinking" } })
 
         local function UpdateChams()
-            for _,Player in next, Players:GetPlayers() do
+            for _, Player in next, Players:GetPlayers() do
                 if Player ~= LocalPlayer then
                     ApplyChams(Player)
                 end
@@ -328,38 +352,41 @@ do
         end
 
         local chams = players.new_sector("chams", "Right")
-        chams.element("Toggle", "enemies", nil, UpdateChams):add_color({Color = Color3.fromRGB(141, 115, 245)}, false, UpdateChams)
-        chams.element("Toggle", "friendlies", nil, UpdateChams):add_color({Color = Color3.fromRGB(102, 255, 102)}, false, UpdateChams)
-        chams.element("Toggle", "through walls", nil, UpdateChams):add_color({Color = Color3.fromRGB(170, 170, 170)}, false, UpdateChams)
+        chams.element("Toggle", "enemies", nil, UpdateChams):add_color({ Color = Color3.fromRGB(141, 115, 245) }, false,
+            UpdateChams)
+        chams.element("Toggle", "friendlies", nil, UpdateChams):add_color({ Color = Color3.fromRGB(102, 255, 102) },
+            false, UpdateChams)
+        chams.element("Toggle", "through walls", nil, UpdateChams):add_color({ Color = Color3.fromRGB(170, 170, 170) },
+            false, UpdateChams)
 
         local drawings = players.new_sector("drawings", "Right")
-        drawings.element("Dropdown", "font", {options = {"Plex", "Monospace", "System", "UI"}})
-        drawings.element("Dropdown", "surround", {options = {"none", "[]", "--", "<>"}})
+        drawings.element("Dropdown", "font", { options = { "Plex", "Monospace", "System", "UI" } })
+        drawings.element("Dropdown", "surround", { options = { "none", "[]", "--", "<>" } })
 
         local world = tabs[3].new_section("world")
 
         local self = world.new_sector("self")
         self.element("Toggle", "third person"):add_keybind()
-        self.element("Slider", "distance", {default = {min = 8, max = 20, default = 15}})
+        self.element("Slider", "distance", { default = { min = 8, max = 20, default = 15 } })
         self.element("Toggle", "fov changer"):add_keybind()
-        self.element("Slider", "field of view", {default = {min = 30, max = 120, default = 80}})
+        self.element("Slider", "field of view", { default = { min = 30, max = 120, default = 80 } })
     end
     do
         local misc = tabs[4].new_section("misc")
 
         local character = misc.new_sector("character")
         character.element("Toggle", "walkspeed"):add_keybind()
-        character.element("Slider", "speed", {default = {min = 20, max = 200, default = 50}})
+        character.element("Slider", "speed", { default = { min = 20, max = 200, default = 50 } })
         character.element("Toggle", "jumppower"):add_keybind()
-        character.element("Slider", "power", {default = {min = 50, max = 200, default = 50}})
-        character.element("Slider", "height", {default = {min = 7, max = 50, default = 15}})
+        character.element("Slider", "power", { default = { min = 50, max = 200, default = 50 } })
+        character.element("Slider", "height", { default = { min = 7, max = 50, default = 15 } })
         character.element("Toggle", "noclip"):add_keybind()
 
         local NoclipLoop = RunService.Stepped:Connect(function()
             if not LocalPlayer.Character then return end
             if not menu.values[4].misc.character.noclip.Toggle and not menu.values[4].misc.character["$noclip"].Toggle then return end
 
-            for _,part in pairs (LocalPlayer.Character:GetDescendants()) do
+            for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
                 if part:IsA("BasePart") and part.CanCollide == true then
                     part.CanCollide = false
                 end
@@ -373,11 +400,11 @@ function ApplyChams(Player)
 
     local BodyParts =
     {
-    "Torso", "UpperTorso", "LowerTorso",
-    "Left Arm", "LeftUpperArm","LeftLowerArm", "LeftHand",
-    "Right Arm", "RightUpperArm", "RightLowerArm", "RightHand",
-    "Left Leg", "LeftUpperLeg", "LeftLowerLeg", "LeftFoot",
-    "Right Leg", "RightUpperLeg", "RightLowerLeg", "RightFoot"
+        "Torso", "UpperTorso", "LowerTorso",
+        "Left Arm", "LeftUpperArm", "LeftLowerArm", "LeftHand",
+        "Right Arm", "RightUpperArm", "RightLowerArm", "RightHand",
+        "Left Leg", "LeftUpperLeg", "LeftLowerLeg", "LeftFoot",
+        "Right Leg", "RightUpperLeg", "RightLowerLeg", "RightFoot"
     }
 
     local Enabled, Color
@@ -388,7 +415,8 @@ function ApplyChams(Player)
         Enabled = menu.values[3].players.chams["friendlies"].Toggle
         Color = menu.values[3].players.chams["$friendlies"].Color
     end
-    local Enabled2, Color2 = menu.values[3].players.chams["through walls"].Toggle, menu.values[3].players.chams["$through walls"].Color
+    local Enabled2, Color2 = menu.values[3].players.chams["through walls"].Toggle,
+        menu.values[3].players.chams["$through walls"].Color
 
     local function ApplyHandle(Part, Handle)
         local Inline, __Outline = Part:FindFirstChild("Inline"), Part:FindFirstChild("_Outline")
@@ -408,7 +436,7 @@ function ApplyChams(Player)
             else
                 Inline.Radius = Part.Size.X / 2 + 0.15
                 Inline.Height = Part.Size.Y + 0.3
-                Inline.CFrame = CFrame.new(Vector3.new(), Vector3.new(0,1,0))
+                Inline.CFrame = CFrame.new(Vector3.new(), Vector3.new(0, 1, 0))
             end
         end
         if not _Outline then
@@ -428,7 +456,7 @@ function ApplyChams(Player)
             else
                 _Outline.Radius = Part.Size.X / 2 + 0.2
                 _Outline.Height = Part.Size.Y + 0.35
-                _Outline.CFrame = CFrame.new(Vector3.new(), Vector3.new(0,1,0))
+                _Outline.CFrame = CFrame.new(Vector3.new(), Vector3.new(0, 1, 0))
             end
         end
         Inline.Color3 = Color2
@@ -442,7 +470,7 @@ function ApplyChams(Player)
         return Inline, _Outline
     end
 
-    for _,Part in next, Player.Character:GetChildren() do
+    for _, Part in next, Player.Character:GetChildren() do
         if Part.Name == "Head" and not Part:IsA("LocalScript") and not Part:IsA("Accessory") then
             ApplyHandle(Part, "CylinderHandleAdornment")
         elseif table.find(BodyParts, Part.Name) and not Part:IsA("LocalScript") and not Part:IsA("Accessory") then
@@ -469,7 +497,7 @@ Players.PlayerAdded:Connect(function(Player)
         ApplyChams(Player)
     end)
 end)
-for _,Player in next, Players:GetPlayers() do
+for _, Player in next, Players:GetPlayers() do
     if Player ~= LocalPlayer then
         ApplyChams(Player)
 
@@ -484,7 +512,7 @@ for _,Player in next, Players:GetPlayers() do
     end
 end
 LocalPlayer:GetPropertyChangedSignal("Team"):Connect(function()
-    for _,Player in next, Players:GetPlayers() do
+    for _, Player in next, Players:GetPlayers() do
         ApplyChams(Player)
     end
 end)
@@ -496,7 +524,8 @@ local TriggerbotLoop = RunService.RenderStepped:Connect(function()
     if TriggerbotDebounce then return end
 
     local SelfCharacter = LocalPlayer.Character
-    local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+    local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"),
+        SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
     if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
 
     local Target = Mouse.Target
@@ -508,15 +537,16 @@ local TriggerbotLoop = RunService.RenderStepped:Connect(function()
     if Player == LocalPlayer then return end
 
     local Character = Player.Character
-    local RootPart, Humanoid = Character and Character:FindFirstChild("HumanoidRootPart"), Character and Character:FindFirstChildOfClass("Humanoid")
+    local RootPart, Humanoid = Character and Character:FindFirstChild("HumanoidRootPart"),
+        Character and Character:FindFirstChildOfClass("Humanoid")
     if not Character or not RootPart or not Humanoid then return end
     if not Character:FindFirstChild("Head") then return end
     if menu.values[5].menu["player check"]["forcefield check"].Toggle and Character:FindFirstChildOfClass("ForceField") then return end
     if not menu.values[5].menu["player check"]["free for all"].Toggle and Player.Team == LocalPlayer.Team then return end
     TriggerbotDebounce = true
     task.spawn(function()
-        if menu.values[2].aimbot.triggerbot["reaction time (ms)"].Slider/1000 > 1/60 then
-            wait(menu.values[2].aimbot.triggerbot["reaction time (ms)"].Slider/1000)
+        if menu.values[2].aimbot.triggerbot["reaction time (ms)"].Slider / 1000 > 1 / 60 then
+            wait(menu.values[2].aimbot.triggerbot["reaction time (ms)"].Slider / 1000)
         end
         mouse1press()
         repeat
@@ -533,25 +563,29 @@ local AimbotLoop = RunService.RenderStepped:Connect(function()
 
     if menu.values[2].aimbot.assist.enabled.Toggle or menu.values[2].aimbot["silent aim"].enabled.Toggle then else return end
     local SelfCharacter = LocalPlayer.Character
-    local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+    local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"),
+        SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
     if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
     if menu.open then return end
 
-    local Params                      = RaycastParams.new()
-    Params.FilterType                 = Enum.RaycastFilterType.Blacklist
-    Params.IgnoreWater                = true
-    Params.FilterDescendantsInstances = {Camera, SelfCharacter}
+    local Params = RaycastParams.new()
+    Params.FilterType = Enum.RaycastFilterType.Blacklist
+    Params.IgnoreWater = true
+    Params.FilterDescendantsInstances = { Camera, SelfCharacter }
 
-    local Closest      = 999999
+    local Closest = 999999
 
     local CameraPosition = Camera.CFrame.Position
-    local MousePosition  = Vector2.new(Mouse.X, Mouse.Y)
+    local MousePosition = Vector2.new(Mouse.X, Mouse.Y)
     if menu.values[2].advanced["mouse offset"].enabled.Toggle then
-        MousePosition = MousePosition + Vector2.new(menu.values[2].advanced["mouse offset"]["x offset"].Slider, menu.values[2].advanced["mouse offset"]["y offset"].Slider)
+        MousePosition = MousePosition +
+            Vector2.new(menu.values[2].advanced["mouse offset"]["x offset"].Slider,
+                menu.values[2].advanced["mouse offset"]["y offset"].Slider)
     end
-    for _,Player in pairs (Players:GetPlayers()) do
+    for _, Player in pairs(Players:GetPlayers()) do
         local Character = Player.Character
-        local RootPart, Humanoid = Character and Character:FindFirstChild("HumanoidRootPart"), Character and Character:FindFirstChildOfClass("Humanoid")
+        local RootPart, Humanoid = Character and Character:FindFirstChild("HumanoidRootPart"),
+            Character and Character:FindFirstChildOfClass("Humanoid")
         if not Character or not RootPart or not Humanoid then continue end
         if not Character:FindFirstChild("Head") then continue end
         if menu.values[5].menu["player check"]["forcefield check"].Toggle and Character:FindFirstChildOfClass("ForceField") then continue end
@@ -559,8 +593,11 @@ local AimbotLoop = RunService.RenderStepped:Connect(function()
         if Player == LocalPlayer then continue end
 
         local Head
-        for _,Part in next, Character:GetChildren() do
-            if not Part:IsA("LocalScript") and Part.Name == "Head" then Head = Part break end
+        for _, Part in next, Character:GetChildren() do
+            if not Part:IsA("LocalScript") and Part.Name == "Head" then
+                Head = Part
+                break
+            end
         end
         if not Head then continue end
 
@@ -574,10 +611,10 @@ local AimbotLoop = RunService.RenderStepped:Connect(function()
 
         local Hitbox = menu.values[2].aimbot.assist.hitbox.Dropdown == "head" and Head or RootPart
         if menu.values[2].aimbot.assist.hitbox.Dropdown == "closest" then
-            local HeadPos  = Camera:WorldToViewportPoint(Head.Position)
+            local HeadPos = Camera:WorldToViewportPoint(Head.Position)
             local TorsoPos = Camera:WorldToViewportPoint(RootPart.Position)
 
-            local HeadDistance  = (Vector2.new(HeadPos.X, HeadPos.Y) - MousePosition).Magnitude
+            local HeadDistance = (Vector2.new(HeadPos.X, HeadPos.Y) - MousePosition).Magnitude
             local TorsoDistance = (Vector2.new(TorsoPos.X, TorsoPos.Y) - MousePosition).Magnitude
 
             Hitbox = HeadDistance < TorsoDistance and Head or RootPart
@@ -585,15 +622,15 @@ local AimbotLoop = RunService.RenderStepped:Connect(function()
 
         if menu.values[2].aimbot.targeting["visible check"].Toggle then
             local Direction = Hitbox.Position - CameraPosition
-            local Result    = workspace:Raycast(CameraPosition, Direction.Unit * Direction.Magnitude, Params)
+            local Result = workspace:Raycast(CameraPosition, Direction.Unit * Direction.Magnitude, Params)
 
             if not Result then continue end
-            local Hit, Pos  = Result.Instance, Result.Position
+            local Hit, Pos = Result.Instance, Result.Position
 
             if not Hit:FindFirstAncestor(Player.Name) then continue end
-            table.insert(ValidTargets, {Player, Hitbox, Magnitude, DistanceFromCharacter, Humanoid.Health})
+            table.insert(ValidTargets, { Player, Hitbox, Magnitude, DistanceFromCharacter, Humanoid.Health })
         else
-            table.insert(ValidTargets, {Player, Hitbox, Magnitude, DistanceFromCharacter, Humanoid.Health})
+            table.insert(ValidTargets, { Player, Hitbox, Magnitude, DistanceFromCharacter, Humanoid.Health })
         end
     end
 
@@ -613,9 +650,12 @@ local AimbotLoop = RunService.RenderStepped:Connect(function()
             local Pos = Camera:WorldToScreenPoint(Hitbox.Position)
             local Magnitude = Vector2.new(Pos.X - Mouse.X, Pos.Y - Mouse.Y)
             if menu.values[2].advanced["mouse offset"].enabled.Toggle then
-                Magnitude = Magnitude + Vector2.new(menu.values[2].advanced["mouse offset"]["x offset"].Slider, menu.values[2].advanced["mouse offset"]["y offset"].Slider)
+                Magnitude = Magnitude +
+                    Vector2.new(menu.values[2].advanced["mouse offset"]["x offset"].Slider,
+                        menu.values[2].advanced["mouse offset"]["y offset"].Slider)
             end
-            mousemoverel(Magnitude.X/(menu.values[2].aimbot.assist.smoothing.Slider + 1), Magnitude.Y/(menu.values[2].aimbot.assist.smoothing.Slider + 1))
+            mousemoverel(Magnitude.X / (menu.values[2].aimbot.assist.smoothing.Slider + 1),
+                Magnitude.Y / (menu.values[2].aimbot.assist.smoothing.Slider + 1))
         end
     end
 end)
@@ -633,7 +673,8 @@ local RageLoop = RunService.RenderStepped:Connect(function()
     end
 
     local SelfCharacter = LocalPlayer.Character
-    local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+    local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"),
+        SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
     if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
     if not menu.values[1].aimbot.main.enabled.Toggle or not menu.values[1].aimbot.main["$enabled"].Active then return end
     if menu.open then return end
@@ -642,14 +683,15 @@ local RageLoop = RunService.RenderStepped:Connect(function()
         mouse1release()
     end
 
-    local Params                      = RaycastParams.new()
-    Params.FilterType                 = Enum.RaycastFilterType.Blacklist
-    Params.IgnoreWater                = true
-    Params.FilterDescendantsInstances = {Camera, SelfCharacter}
+    local Params = RaycastParams.new()
+    Params.FilterType = Enum.RaycastFilterType.Blacklist
+    Params.IgnoreWater = true
+    Params.FilterDescendantsInstances = { Camera, SelfCharacter }
 
-    for _,Player in pairs (Players:GetPlayers()) do
+    for _, Player in pairs(Players:GetPlayers()) do
         local Character = Player.Character
-        local RootPart, Humanoid = Character and Character:FindFirstChild("HumanoidRootPart"), Character and Character:FindFirstChildOfClass("Humanoid")
+        local RootPart, Humanoid = Character and Character:FindFirstChild("HumanoidRootPart"),
+            Character and Character:FindFirstChildOfClass("Humanoid")
         if not Character or not RootPart or not Humanoid then continue end
         if not Character:FindFirstChild("Head") then continue end
         if menu.values[5].menu["player check"]["forcefield check"].Toggle and Character:FindFirstChildOfClass("ForceField") then continue end
@@ -658,13 +700,16 @@ local RageLoop = RunService.RenderStepped:Connect(function()
         if Player == LocalPlayer then continue end
 
         local Head
-        for _,Part in next, Character:GetChildren() do
-            if not Part:IsA("LocalScript") and Part.Name == "Head" then Head = Part break end
+        for _, Part in next, Character:GetChildren() do
+            if not Part:IsA("LocalScript") and Part.Name == "Head" then
+                Head = Part
+                break
+            end
         end
         if not Head then continue end
         local Hitbox
         if menu.values[1].aimbot.main.hitbox.Dropdown == "head" then
-            for _,Part in next, Character:GetChildren() do
+            for _, Part in next, Character:GetChildren() do
                 if not Part:IsA("LocalScript") and string.lower(Part.Name) == menu.values[1].aimbot.main.hitbox.Dropdown then
                     Hitbox = Part
                     break
@@ -675,15 +720,16 @@ local RageLoop = RunService.RenderStepped:Connect(function()
         end
         if not Hitbox then continue end
 
-        local Origin = menu.values[1].aimbot.main.origin.Dropdown == "camera" and Camera.CFrame.Position or SelfRootPart.Position + Vector3.new(0, 1.5, 0)
+        local Origin = menu.values[1].aimbot.main.origin.Dropdown == "camera" and Camera.CFrame.Position or
+            SelfRootPart.Position + Vector3.new(0, 1.5, 0)
         local Direction = Hitbox.Position - Origin
-        local Result    = workspace:Raycast(Origin, Direction.Unit * Direction.Magnitude, Params)
+        local Result = workspace:Raycast(Origin, Direction.Unit * Direction.Magnitude, Params)
 
         if not Result then continue end
-        local Hit, Pos  = Result.Instance, Result.Position
+        local Hit, Pos = Result.Instance, Result.Position
 
         if not Hit:FindFirstAncestor(Player.Name) then continue end
-        RageTarget = {Player, Head}
+        RageTarget = { Player, Head }
 
         if menu.values[1].aimbot.main["automatic fire"].Toggle then
             mouse1press()
@@ -693,16 +739,21 @@ local RageLoop = RunService.RenderStepped:Connect(function()
     end
 end)
 
-local OriginalWalkspeed = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and LocalPlayer.Character:FindFirstChildOfClass("Humanoid").WalkSpeed or 16
-local OriginalJumpPower = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and LocalPlayer.Character:FindFirstChildOfClass("Humanoid").JumpPower or 50
-local OriginalJumpHeight = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and LocalPlayer.Character:FindFirstChildOfClass("Humanoid").JumpHeight or 7.2
-local OriginalAutoRotate = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and LocalPlayer.Character:FindFirstChildOfClass("Humanoid").AutoRotate or true
+local OriginalWalkspeed = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and
+    LocalPlayer.Character:FindFirstChildOfClass("Humanoid").WalkSpeed or 16
+local OriginalJumpPower = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and
+    LocalPlayer.Character:FindFirstChildOfClass("Humanoid").JumpPower or 50
+local OriginalJumpHeight = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and
+    LocalPlayer.Character:FindFirstChildOfClass("Humanoid").JumpHeight or 7.2
+local OriginalAutoRotate = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and
+    LocalPlayer.Character:FindFirstChildOfClass("Humanoid").AutoRotate or true
 local AntiaimAngle = CFrame.new()
 local Jitter = false
 local FOV = Camera.FieldOfView
 RunService.RenderStepped:Connect(function()
     local SelfCharacter = LocalPlayer.Character
-    local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+    local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"),
+        SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
     if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
 
     if menu.values[4].misc.character.walkspeed.Toggle and menu.values[4].misc.character["$walkspeed"].Active then
@@ -721,10 +772,12 @@ RunService.RenderStepped:Connect(function()
     if menu.values[1].antiaim.direction.enabled.Toggle and menu.values[1].antiaim.direction["$enabled"].Active then
         SelfHumanoid.AutoRotate = false
 
-        local Angle do
+        local Angle
+        do
             Angle = -math.atan2(Camera.CFrame.LookVector.Z, Camera.CFrame.LookVector.X) + math.rad(-90)
             if menu.values[1].antiaim.direction["yaw base"].Dropdown == "random" then
-                Angle = -math.atan2(Camera.CFrame.LookVector.Z, Camera.CFrame.LookVector.X) + math.rad(math.random(0, 360))
+                Angle = -math.atan2(Camera.CFrame.LookVector.Z, Camera.CFrame.LookVector.X) +
+                    math.rad(math.random(0, 360))
             elseif menu.values[1].antiaim.direction["yaw base"].Dropdown == "spin" then
                 Angle = -math.atan2(Camera.CFrame.LookVector.Z, Camera.CFrame.LookVector.X) + tick() * 10 % 360
             end
@@ -747,7 +800,7 @@ RunService.RenderStepped:Connect(function()
         if menu.values[1].antiaim.direction["yaw base"].Dropdown == "targets" then
             local Target
             local Closest = 9999
-            for _,Player in next, Players:GetPlayers() do
+            for _, Player in next, Players:GetPlayers() do
                 if not Player.Character or not Player.Character:FindFirstChild("HumanoidRootPart") then continue end
 
                 local Pos, OnScreen = Camera:WorldToViewportPoint(Player.Character.HumanoidRootPart.Position)
@@ -823,7 +876,8 @@ local OldNewIndex; OldNewIndex = hookmetamethod(game, "__newindex", function(sel
 
     return OldNewIndex(self, key, value)
 end)
-local _Humanoid do
+local _Humanoid
+do
     RunService.RenderStepped:Connect(function()
         _Humanoid = nil
         if LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
@@ -863,8 +917,14 @@ local OldIndex; OldIndex = hookmetamethod(game, "__index", function(self, key)
                         return RageTarget.CFrame
                     end
                 elseif LegitTarget then
-                    if not menu.values[2].aimbot["silent aim"].enabled.Toggle or not menu.values[2].aimbot["silent aim"]["$enabled"].Active then return OldIndex(self, key) end
-                    if not (math.random(1, 100) <= menu.values[2].aimbot["silent aim"]["hitchance"].Slider) then return OldIndex(self, key) end
+                    if not menu.values[2].aimbot["silent aim"].enabled.Toggle or not menu.values[2].aimbot["silent aim"]["$enabled"].Active then
+                        return
+                            OldIndex(self, key)
+                    end
+                    if not (math.random(1, 100) <= menu.values[2].aimbot["silent aim"]["hitchance"].Slider) then
+                        return
+                            OldIndex(self, key)
+                    end
                     if key == "Target" then
                         return LegitTarget
                     elseif key == "Hit" then
@@ -878,7 +938,7 @@ local OldIndex; OldIndex = hookmetamethod(game, "__index", function(self, key)
     return OldIndex(self, key)
 end)
 local OldNamecall; OldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
-    local args = {...}
+    local args = { ... }
     local method = tostring(getnamecallmethod())
 
     if checkcaller() then
@@ -910,8 +970,14 @@ local OldNamecall; OldNamecall = hookmetamethod(game, "__namecall", function(sel
                 args[1] = Ray.new(Camera.CFrame.Position, (RageTarget.Position - Camera.CFrame.Position).unit * 500)
             end
         elseif LegitTarget then
-            if not menu.values[2].aimbot["silent aim"].enabled.Toggle or not menu.values[2].aimbot["silent aim"]["$enabled"].Active then return OldNamecall(self, ...) end
-            if not (math.random(1, 100) <= menu.values[2].aimbot["silent aim"]["hitchance"].Slider) then return OldNamecall(self, ...) end
+            if not menu.values[2].aimbot["silent aim"].enabled.Toggle or not menu.values[2].aimbot["silent aim"]["$enabled"].Active then
+                return
+                    OldNamecall(self, ...)
+            end
+            if not (math.random(1, 100) <= menu.values[2].aimbot["silent aim"]["hitchance"].Slider) then
+                return
+                    OldNamecall(self, ...)
+            end
             if method == "Raycast" then
                 args[2] = (LegitTarget.Position - args[1]).unit * 500
             elseif method == "FindPartOnRayWithIgnoreList" or method == "FindPartOnRay" then
@@ -924,7 +990,7 @@ local OldNamecall; OldNamecall = hookmetamethod(game, "__namecall", function(sel
 end)
 
 local PlayerDrawings = {}
-local Utility        = {}
+local Utility = {}
 
 Utility.Settings = {
     Line = {
@@ -956,11 +1022,12 @@ function Utility.New(Type, Outline, Name)
         drawing[i] = v
     end
     if Outline then
-        drawing.Color = Color3.new(0,0,0)
+        drawing.Color = Color3.new(0, 0, 0)
         drawing.Thickness = 3
     end
     return drawing
 end
+
 function Utility.Add(Player)
     if not PlayerDrawings[Player] then
         PlayerDrawings[Player] = {
@@ -976,7 +1043,7 @@ function Utility.Add(Player)
     end
 end
 
-for _,Player in pairs(Players:GetPlayers()) do
+for _, Player in pairs(Players:GetPlayers()) do
     if Player ~= LocalPlayer then
         Utility.Add(Player)
     end
@@ -984,7 +1051,7 @@ end
 Players.PlayerAdded:Connect(Utility.Add)
 Players.PlayerRemoving:Connect(function(Player)
     if PlayerDrawings[Player] then
-        for i,v in pairs(PlayerDrawings[Player]) do
+        for i, v in pairs(PlayerDrawings[Player]) do
             if v then
                 v:Remove()
             end
@@ -995,18 +1062,19 @@ Players.PlayerRemoving:Connect(function(Player)
 end)
 
 local ESPLoop = game:GetService("RunService").RenderStepped:Connect(function()
-    for _,Player in pairs (Players:GetPlayers()) do
+    for _, Player in pairs(Players:GetPlayers()) do
         local PlayerDrawing = PlayerDrawings[Player]
         if not PlayerDrawing then continue end
 
-        for _,Drawing in pairs (PlayerDrawing) do
+        for _, Drawing in pairs(PlayerDrawing) do
             Drawing.Visible = false
         end
 
         if not menu.values[3].players.esp.enabled.Toggle or not menu.values[3].players.esp["$enabled"].Active then continue end
 
         local Character = Player.Character
-        local RootPart, Humanoid = Character and Character:FindFirstChild("HumanoidRootPart"), Character and Character:FindFirstChildOfClass("Humanoid")
+        local RootPart, Humanoid = Character and Character:FindFirstChild("HumanoidRootPart"),
+            Character and Character:FindFirstChildOfClass("Humanoid")
         if not Character or not RootPart or not Humanoid then continue end
 
         local DistanceFromCharacter = (Camera.CFrame.Position - RootPart.Position).Magnitude
@@ -1030,20 +1098,23 @@ local ESPLoop = game:GetService("RunService").RenderStepped:Connect(function()
             local ScreenPos, OnScreen = Camera:WorldToScreenPoint(RootPos)
             if not OnScreen then
                 local Drawing = PlayerDrawing.Offscreen
-                local FOV     = 800 - menu.values[3].players["out of fov"].offset.Slider
-                local Size    = menu.values[3].players["out of fov"].size.Slider
+                local FOV = 800 - menu.values[3].players["out of fov"].offset.Slider
+                local Size = menu.values[3].players["out of fov"].size.Slider
 
                 local Center = (Camera.ViewportSize / 2)
                 local Direction = (Vector2.new(ScreenPos.X, ScreenPos.Y) - Center).Unit
                 local Radian = math.atan2(Direction.X, Direction.Y)
                 local Angle = (((math.pi * 2) / FOV) * Radian)
                 local ClampedPosition = (Center + (Direction * math.min(math.abs(((Center.Y - FOV) / math.sin(Angle)) * FOV), math.abs((Center.X - FOV) / (math.cos(Angle)) / 2))))
-                local Point = Vector2.new(math.floor(ClampedPosition.X - (Size / 2)), math.floor((ClampedPosition.Y - (Size / 2) - 15)))
+                local Point = Vector2.new(math.floor(ClampedPosition.X - (Size / 2)),
+                    math.floor((ClampedPosition.Y - (Size / 2) - 15)))
 
                 local function Rotate(point, center, angle)
                     angle = math.rad(angle)
-                    local rotatedX = math.cos(angle) * (point.X - center.X) - math.sin(angle) * (point.Y - center.Y) + center.X
-                    local rotatedY = math.sin(angle) * (point.X - center.X) + math.cos(angle) * (point.Y - center.Y) + center.Y
+                    local rotatedX = math.cos(angle) * (point.X - center.X) - math.sin(angle) * (point.Y - center.Y) +
+                        center.X
+                    local rotatedY = math.sin(angle) * (point.X - center.X) + math.cos(angle) * (point.Y - center.Y) +
+                        center.Y
 
                     return Vector2.new(math.floor(rotatedX), math.floor(rotatedY))
                 end
@@ -1052,9 +1123,11 @@ local ESPLoop = game:GetService("RunService").RenderStepped:Connect(function()
                 Drawing.PointA = Rotate(Point + Vector2.new(Size, Size), Point, Rotation)
                 Drawing.PointB = Rotate(Point + Vector2.new(-Size, -Size), Point, Rotation)
                 Drawing.PointC = Rotate(Point + Vector2.new(-Size, Size), Point, Rotation)
-                Drawing.Color = Player.Team ~= LocalPlayer.Team and VisualTable["$enemies"].Color or VisualTable["$teammates"].Color
+                Drawing.Color = Player.Team ~= LocalPlayer.Team and VisualTable["$enemies"].Color or
+                    VisualTable["$teammates"].Color
 
-                Drawing.Filled = not table.find(menu.values[3].players["out of fov"].settings.Combo, "outline") and true or false
+                Drawing.Filled = not table.find(menu.values[3].players["out of fov"].settings.Combo, "outline") and true or
+                    false
                 if table.find(menu.values[3].players["out of fov"].settings.Combo, "blinking") then
                     Drawing.Transparency = (math.sin(tick() * 5) + 1) / 2
                 else
@@ -1064,19 +1137,21 @@ local ESPLoop = game:GetService("RunService").RenderStepped:Connect(function()
                 Drawing.Visible = true
             end
         else
-            local VisualTable = Player.Team ~= LocalPlayer.Team and menu.values[3].players.enemies or menu.values[3].players.friendlies
+            local VisualTable = Player.Team ~= LocalPlayer.Team and menu.values[3].players.enemies or
+                menu.values[3].players.friendlies
 
-            local Size           = (Camera:WorldToViewportPoint(RootPart.Position - Vector3.new(0, 3, 0)).Y - Camera:WorldToViewportPoint(RootPart.Position + Vector3.new(0, 2.6, 0)).Y) / 2
-            local BoxSize        = Vector2.new(math.floor(Size * 1.5), math.floor(Size * 1.9))
-            local BoxPos         = Vector2.new(math.floor(Pos.X - Size * 1.5 / 2), math.floor(Pos.Y - Size * 1.6 / 2))
+            local Size = (Camera:WorldToViewportPoint(RootPart.Position - Vector3.new(0, 3, 0)).Y - Camera:WorldToViewportPoint(RootPart.Position + Vector3.new(0, 2.6, 0)).Y) /
+                2
+            local BoxSize = Vector2.new(math.floor(Size * 1.5), math.floor(Size * 1.9))
+            local BoxPos = Vector2.new(math.floor(Pos.X - Size * 1.5 / 2), math.floor(Pos.Y - Size * 1.6 / 2))
 
-            local Name           = PlayerDrawing.Name
-            local Tool           = PlayerDrawing.Tool
-            local Distance       = PlayerDrawing.Distance
-            local Box            = PlayerDrawing.Box
-            local BoxOutline     = PlayerDrawing.BoxOutline
-            local Health         = PlayerDrawing.Health
-            local HealthOutline  = PlayerDrawing.HealthOutline
+            local Name = PlayerDrawing.Name
+            local Tool = PlayerDrawing.Tool
+            local Distance = PlayerDrawing.Distance
+            local Box = PlayerDrawing.Box
+            local BoxOutline = PlayerDrawing.BoxOutline
+            local Health = PlayerDrawing.Health
+            local HealthOutline = PlayerDrawing.HealthOutline
 
             if VisualTable.box.Toggle then
                 Box.Size = BoxSize
@@ -1090,12 +1165,13 @@ local ESPLoop = game:GetService("RunService").RenderStepped:Connect(function()
 
             if VisualTable.health.Toggle then
                 Health.From = Vector2.new((BoxPos.X - 5), BoxPos.Y + BoxSize.Y)
-                Health.To = Vector2.new(Health.From.X, Health.From.Y - (Humanoid.Health / Humanoid.MaxHealth) * BoxSize.Y)
+                Health.To = Vector2.new(Health.From.X, Health.From.Y - (Humanoid.Health / Humanoid.MaxHealth) * BoxSize
+                    .Y)
                 Health.Color = VisualTable["$health"].Color
                 Health.Visible = true
 
                 HealthOutline.From = Vector2.new(Health.From.X, BoxPos.Y + BoxSize.Y + 1)
-                HealthOutline.To = Vector2.new(Health.From.X, (Health.From.Y - 1 * BoxSize.Y) -1)
+                HealthOutline.To = Vector2.new(Health.From.X, (Health.From.Y - 1 * BoxSize.Y) - 1)
                 HealthOutline.Visible = true
             end
 
@@ -1124,7 +1200,7 @@ local ESPLoop = game:GetService("RunService").RenderStepped:Connect(function()
                     String = string.gsub(String, Right, "")
                 end
 
-                return Left..String..Right
+                return Left .. String .. Right
             end
 
             if VisualTable.name.Toggle then
@@ -1138,18 +1214,20 @@ local ESPLoop = game:GetService("RunService").RenderStepped:Connect(function()
             if VisualTable.indicators.Toggle then
                 local BottomOffset = BoxSize.Y + BoxPos.Y + 1
                 if table.find(VisualTable.types.Combo, "tool") then
-                    local Equipped = Player.Character:FindFirstChildOfClass("Tool") and Player.Character:FindFirstChildOfClass("Tool").Name or "None"
+                    local Equipped = Player.Character:FindFirstChildOfClass("Tool") and
+                        Player.Character:FindFirstChildOfClass("Tool").Name or "None"
                     Equipped = SurroundString(Equipped, menu.values[3].players.drawings.surround.Dropdown)
                     Tool.Text = Equipped
-                    Tool.Position = Vector2.new(BoxSize.X/2 + BoxPos.X, BottomOffset)
+                    Tool.Position = Vector2.new(BoxSize.X / 2 + BoxPos.X, BottomOffset)
                     Tool.Color = VisualTable["$indicators"].Color
                     Tool.Font = Drawing.Fonts[menu.values[3].players.drawings.font.Dropdown]
                     Tool.Visible = true
                     BottomOffset = BottomOffset + 15
                 end
                 if table.find(VisualTable.types.Combo, "distance") then
-                    Distance.Text = SurroundString(math.floor(DistanceFromCharacter).."m", menu.values[3].players.drawings.surround.Dropdown)
-                    Distance.Position = Vector2.new(BoxSize.X/2 + BoxPos.X, BottomOffset)
+                    Distance.Text = SurroundString(math.floor(DistanceFromCharacter) .. "m",
+                        menu.values[3].players.drawings.surround.Dropdown)
+                    Distance.Position = Vector2.new(BoxSize.X / 2 + BoxPos.X, BottomOffset)
                     Distance.Color = VisualTable["$indicators"].Color
                     Distance.Font = Drawing.Fonts[menu.values[3].players.drawings.font.Dropdown]
                     Distance.Visible = true
